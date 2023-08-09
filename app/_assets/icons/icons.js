@@ -29,13 +29,11 @@ const icons = {
   schedule,
   expand,
   drag,
-  box,
   menu,
   profile,
   back,
   thumbnail,
   tick,
-  licence,
   lock,
   scrollArrow,
 };

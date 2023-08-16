@@ -65,10 +65,10 @@ export default function SideBar(props) {
    * Static variables
    */
   const options = [
-    { icon: icons.board, text: "Videos", link: "/app" },
-    { icon: icons.addProject, text: "Create", link: "/app/create" },
-    { icon: icons.list, text: "Recent sheet", link: "/app/recent" },
-    { icon: icons.settings, text: "Settings", link: "/app/settings" },
+    { icon: icons.settings, text: "Videos", link: "/" },
+    { icon: icons.settings, text: "Create", link: "/create" },
+    { icon: icons.settings, text: "Recent sheet", link: "/recent" },
+    { icon: icons.settings, text: "Settings", link: "/settings" },
   ];
 
   return (
@@ -89,13 +89,11 @@ export default function SideBar(props) {
         </animated.div>
       </div>
       <animated.div className={styles.nav__buttons} style={buttons}>
-        {showText && <div className={styles.nav__title}>MENU</div>}
         {options.map((option, index) => {
           return (
-            <Link href={option.link}>
+            <Link href={option.link} key={index}>
               <div
                 className={styles.nav__button__item}
-                key={index}
                 style={{
                   backgroundColor:
                     getPath(pathname) === option.text.toLowerCase()

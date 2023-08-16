@@ -1,0 +1,109 @@
+.container {
+  width: 100%;
+  flex-grow: 1;
+  padding: 25px 30px;
+  box-sizing: border-box;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-button {
+  display: none;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #88d791;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #ecf5ed;
+}
+
+.head {
+  margin: 0%;
+  padding: 0%;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.scroll__container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.categories {
+  width: 100%;
+  display: flex;
+  column-gap: 10px;
+  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 15px;
+  align-items: center;
+  overscroll-behavior: none;
+  margin-bottom: 20px;
+}
+
+/* Hide the scrollbar thumb and track */
+.categories::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Firefox: hide scrollbar */
+.categories {
+  scrollbar-width: none;
+}
+
+/* IE and Edge: hide scrollbar */
+.categories {
+  -ms-overflow-style: none;
+}
+
+.category {
+  padding: 10px 30px;
+  background-color: #ecf5ed;
+  border: 1px solid green;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+.left {
+  position: absolute;
+  left: 0;
+  margin: auto 0;
+  width: 30px;
+  height: 30px;
+  color: #ecf5ed;
+  background-color: rgb(137, 137, 137);
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  margin: auto 0;
+  width: 30px;
+  height: 30px;
+  color: #ecf5ed;
+  background-color: rgb(137, 137, 137);
+  transform: rotate(180deg);
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 2;
+}

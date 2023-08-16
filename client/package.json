@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ipld/car": "^5.2.0",
     "@rainbow-me/rainbowkit": "^1.0.8",
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.5",
+    "carbites": "^1.0.6",
     "ethers": "^6.7.0",
+    "firebase": "^10.1.0",
     "fs": "^0.0.1-security",
+    "ipfs-car": "^1.0.0",
+    "multiformats": "^12.0.1",
     "next": "^13.4.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +26,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-redux": "^8.1.2",
     "viem": "^1.5.4",
-    "wagmi": "^1.3.9"
+    "wagmi": "^1.3.9",
+    "web3.storage": "^4.5.5"
   }
 }

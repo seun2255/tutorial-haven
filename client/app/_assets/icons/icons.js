@@ -16,6 +16,9 @@ import thumbnail from "./thumbnail.svg";
 import tick from "./tick.svg";
 import lock from "./lock.svg";
 import scrollArrow from "./scrollArrow.svg";
+import succesTick from "./succesTick.svg";
+import file from "./file.svg";
+import plus from "./plus.svg";
 
 const icons = {
   cancel,
@@ -35,7 +38,10 @@ const icons = {
   thumbnail,
   tick,
   lock,
+  plus,
   scrollArrow,
+  succesTick,
+  file,
 };
 
 export default icons;

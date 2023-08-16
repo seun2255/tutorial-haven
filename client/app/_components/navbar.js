@@ -5,14 +5,12 @@ import styles from "./navbar.module.css";
 import icons from "@/app/_assets/icons/icons";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setWalletModal } from "../../redux/modals";
+import { Connect } from "./connectButton";
+import { useAccount } from "wagmi";
 
 export default function Navbar() {
   const { connected, user } = useSelector((state) => state.user);
-
-  const dispath = useDispatch();
-
-  useEffect(() => {}, []);
+  const { isConnected, address } = useAccount();
 
   return (
     <div className={styles.container}>
@@ -29,12 +27,7 @@ export default function Navbar() {
       {connected ? (
         <button className={styles.name}>{user.username}</button>
       ) : (
-        <button
-          className={styles.connect__button}
-          onClick={() => setWalletModal(true)}
-        >
-          Connect
-        </button>
+        <Connect />
       )}
     </div>
   );

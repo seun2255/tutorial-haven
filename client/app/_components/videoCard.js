@@ -17,7 +17,11 @@ export default function VideoCard(props) {
         </div>
         <div className={styles.details}>
           <div className={styles.dp}>
-            <Image src={video.author_dp} alt="profile__pic" fill />
+            <Image
+              src={video.author_dp === "" ? icons.profile : video.author_dp}
+              alt="profile__pic"
+              fill
+            />
           </div>
           <div className={styles.text__details}>
             <p className={styles.title}>{video.title}</p>

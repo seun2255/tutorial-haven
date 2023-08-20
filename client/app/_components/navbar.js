@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Connect } from "./connectButton";
 import { useAccount } from "wagmi";
+import { getSigner } from "../api";
 
 export default function Navbar() {
   const { connected, user } = useSelector((state) => state.user);
@@ -25,7 +26,16 @@ export default function Navbar() {
         </div>
       </div>
       {connected ? (
-        <button className={styles.name}>{user.username}</button>
+        <div className={styles.name__card}>
+          <div className={styles.profile__pic}>
+            <Image
+              alt="user"
+              layout="fill"
+              src={user.profilePic === "" ? icons.profile : user.profilePic}
+            />
+          </div>
+          <span className={styles.username}>{user.username}</span>
+        </div>
       ) : (
         <Connect />
       )}

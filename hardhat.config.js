@@ -12,5 +12,8 @@ module.exports = {
       url: process.env.APOTHEM_NETWORK_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
+    hardhat: {
+      chainId: 1337,
+    },
   },
 };

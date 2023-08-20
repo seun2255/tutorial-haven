@@ -10,6 +10,9 @@ import { Web3Storage } from "web3.storage";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import { animated, useSpring } from "@react-spring/web";
+import { uploadVideo } from "@/app/api";
+import { useSelector } from "react-redux";
+import ProgressModal from "./progressModal";
 
 export default function UploadVideo() {
   const [title, setTitle] = useState("");
@@ -20,9 +23,12 @@ export default function UploadVideo() {
   const [videoLink, setVideoLink] = useState("");
   const [videoLoader, setVideoLoader] = useState(false);
   const [tags, setTags] = useState([]);
-  const [uploading, setUploading] = useState(false);
   const [picLoader, setPicLoader] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const { user } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -79,7 +85,15 @@ export default function UploadVideo() {
     setTags(addedTags);
   };
 
-  const handleUpload = () => {};
+  const handleUpload = () => {
+    setSaving(true);
+    uploadVideo(title, description, videoLink, thumbnail, tags).then(() => {
+      setSaved(true);
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
+    });
+  };
 
   const animateProgress = useSpring({
     width: `${progress}%`,
@@ -223,7 +237,7 @@ export default function UploadVideo() {
         </div>
       </div>
 
-      {uploading && <ProgressModal />}
+      {saving && <ProgressModal />}
     </div>
   );
 }

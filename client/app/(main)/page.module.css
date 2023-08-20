@@ -1,7 +1,6 @@
 .container {
   width: 100%;
   flex-grow: 1;
-  padding: 25px 30px;
   box-sizing: border-box;
   overflow: auto;
   overflow-y: scroll;
@@ -34,6 +33,9 @@
   display: flex;
   align-items: center;
   position: relative;
+  padding: 15px 15px;
+  margin-top: 15px;
+  padding-bottom: 0%;
 }
 
 .categories {
@@ -45,10 +47,22 @@
   overflow-y: hidden;
   position: relative;
   box-sizing: border-box;
-  padding: 0 15px;
   align-items: center;
-  overscroll-behavior: none;
-  margin-bottom: 20px;
+  padding-bottom: 15px;
+  padding: 0 10px;
+}
+
+.fading-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 /* Hide the scrollbar thumb and track */
@@ -68,17 +82,20 @@
 }
 
 .category {
-  padding: 10px 30px;
+  padding: 7px 26px;
   background-color: #ecf5ed;
   border: 1px solid green;
-  border-radius: 10px;
+  border-radius: 50px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
+  padding: 20px;
+  border-top-left-radius: 10px;
 }
 
 .left {

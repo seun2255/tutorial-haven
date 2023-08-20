@@ -12,6 +12,7 @@ import { useAccount } from "wagmi";
 import { getUserData } from "../database";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/user";
+import { updateVideos } from "../redux/videos";
 
 export default function Wrapper({ children }) {
   const { connected } = useSelector((state) => state.user);
@@ -21,7 +22,9 @@ export default function Wrapper({ children }) {
   useAccount({
     onConnect({ address }) {
       getUserData(address).then((data) => {
+        console.log("Logging in");
         dispath(login(data.data));
+        dispath(updateVideos(data.videos));
         if (data.new) setNewUserModal(true);
       });
     },

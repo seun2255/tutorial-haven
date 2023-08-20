@@ -9,7 +9,8 @@ import icons from "../_assets/icons/icons";
 import SuccesModal from "../_modals/succedModal";
 
 export default function Home() {
-  //   const { videos } = useSelector((state) => state.videos);
+  const { videos } = useSelector((state) => state.videos);
+  console.log(videos);
   const scrollDiv = useRef(null);
 
   const scrollLeft = () => {
@@ -26,21 +27,22 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.head}>Categories</h3>
+      {/* <h3 className={styles.head}>Categories</h3> */}
       <div className={styles.scroll__container}>
-        <div className={styles.left} onClick={scrollLeft}>
+        {/* <div className={styles.left} onClick={scrollLeft}>
           <Image src={icons.scrollArrow} fill alt="icon" />
         </div>
         <div className={styles.right} onClick={scrollRight}>
           <Image src={icons.scrollArrow} fill alt="icon" />
-        </div>
+        </div> */}
         <div
           className={styles.categories}
-          ref={scrollDiv}
-          onWheel={(e) => {
-            e.preventDefault();
-          }}
+          // ref={scrollDiv}
+          // onWheel={(e) => {
+          //   e.preventDefault();
+          // }}
         >
+          <div class="fading-mask"></div>
           {categories.map((category, id) => {
             return (
               <div className={styles.category} key={id}>
@@ -51,9 +53,9 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.content}>
-        {/* {videos.map((video) => {
+        {videos.map((video) => {
           return <VideoCard video={video} />;
-        })} */}
+        })}
       </div>
     </div>
   );

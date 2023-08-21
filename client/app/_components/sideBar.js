@@ -35,7 +35,7 @@ export default function SideBar(props) {
    * SReact pring Hooks
    */
   const sidebar = useSpring({
-    width: expanded ? "190px" : "70px",
+    width: expanded ? "270px" : "70px",
     config: { duration: 300 },
     onRest: () => {
       if (action === "over") setShowText(true);
@@ -78,8 +78,8 @@ export default function SideBar(props) {
           <Image alt="logo" src={icons.logo} layout="fill" />
         </div>
         {showText && (
-          <animated.span className={styles.logo__name} style={animateText}>
-            Tutorial Haven
+          <animated.span className={styles.logo__text} style={animateText}>
+            <Image src={icons.logoText} alt="text" fill />
           </animated.span>
         )}
       </div>

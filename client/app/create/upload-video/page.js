@@ -13,6 +13,7 @@ import { animated, useSpring } from "@react-spring/web";
 import { uploadVideo } from "@/app/api";
 import { useSelector } from "react-redux";
 import ProgressModal from "./progressModal";
+import { formatTime } from "@/app/utils/dateFunctions";
 
 export default function UploadVideo() {
   const [title, setTitle] = useState("");
@@ -27,6 +28,7 @@ export default function UploadVideo() {
   const [progress, setProgress] = useState(0);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [duration, setDuration] = useState(0);
 
   const { user } = useSelector((state) => state.user);
 
@@ -40,6 +42,17 @@ export default function UploadVideo() {
     acceptedFiles.forEach((file) => {
       uploadedFile = file;
     });
+
+    const video = document.createElement("video");
+
+    video.preload = "metadata";
+    video.src = URL.createObjectURL(selectedFile);
+
+    video.onloadedmetadata = function () {
+      const videoDuration = video.duration;
+      console.log("Video Duration:", formatTime(videoDuration));
+      setDuration(formatTime(videoDuration));
+    };
     setVideoLoader(true);
     setVideo(uploadedFile);
 
@@ -87,12 +100,14 @@ export default function UploadVideo() {
 
   const handleUpload = () => {
     setSaving(true);
-    uploadVideo(title, description, videoLink, thumbnail, tags).then(() => {
-      setSaved(true);
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
-    });
+    uploadVideo(title, description, videoLink, thumbnail, tags, duration).then(
+      () => {
+        setSaved(true);
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      }
+    );
   };
 
   const animateProgress = useSpring({

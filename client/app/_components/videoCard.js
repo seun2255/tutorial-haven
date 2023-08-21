@@ -10,7 +10,7 @@ export default function VideoCard(props) {
   console.log(video);
 
   return (
-    <Link href={`/app/videos/${video.id}`}>
+    <Link href={`/videos/${video.id}`}>
       <div className={styles.main}>
         <div className={styles.thumbnail}>
           <Image src={video.thumbnail} fill alt="thumbnail" />

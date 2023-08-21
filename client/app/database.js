@@ -128,7 +128,8 @@ const uploadNewVideo = async (
   author,
   author_dp,
   address,
-  tags
+  tags,
+  duration
 ) => {
   var data1 = {};
   var data2 = {};
@@ -153,6 +154,7 @@ const uploadNewVideo = async (
     author,
     author_dp,
     tags,
+    duration,
   };
 
   data1["videos"].push(videoDetails);
@@ -167,7 +169,7 @@ export { getUserData, updateUserProfile, uploadNewVideo, getUserDetails };
 const tempVideos = [
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -179,7 +181,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -191,7 +193,7 @@ const tempVideos = [
   },
   {
     id: 2,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -203,7 +205,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -215,7 +217,7 @@ const tempVideos = [
   },
   {
     id: 4,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -227,7 +229,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -239,7 +241,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -251,7 +253,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -263,7 +265,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -275,7 +277,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -287,7 +289,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -299,7 +301,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
@@ -311,7 +313,7 @@ const tempVideos = [
   },
   {
     id: 1,
-    title: "cooking",
+    title: "The jazz hop cafe stream",
     thumbnail:
       "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     link: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",

@@ -39,7 +39,14 @@ const getTokenContract = async () => {
   return contract;
 };
 
-const uploadVideo = async (title, description, url, thumbnail, tags) => {
+const uploadVideo = async (
+  title,
+  description,
+  url,
+  thumbnail,
+  tags,
+  duration
+) => {
   const contract = await getContract();
   const address = await getAddress();
 
@@ -62,7 +69,8 @@ const uploadVideo = async (title, description, url, thumbnail, tags) => {
     author.username,
     author.profilePic,
     address,
-    tags
+    tags,
+    duration
   ).then(() => {
     console.log("Video Uploaded");
   });

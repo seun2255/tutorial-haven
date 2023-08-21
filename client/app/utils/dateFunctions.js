@@ -21,4 +21,20 @@ const convertToDateTime = (timestampString) => {
   return new Date(`${year}-${month}-${day}T${hour}:${minute}`);
 };
 
-export { timeStamp, convertToDateTime };
+function formatTime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+
+  if (hours > 0) {
+    return `${hours}:${padZero(minutes)}:${padZero(remainingSeconds)}`;
+  } else {
+    return `${minutes}:${padZero(remainingSeconds)}`;
+  }
+}
+
+function padZero(number) {
+  return number.toString().padStart(2, "0");
+}
+
+export { timeStamp, convertToDateTime, formatTime };

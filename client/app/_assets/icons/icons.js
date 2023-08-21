@@ -19,6 +19,7 @@ import scrollArrow from "./scrollArrow.svg";
 import succesTick from "./succesTick.svg";
 import file from "./file.svg";
 import plus from "./plus.svg";
+import logoText from "./logoText.svg";
 
 const icons = {
   cancel,
@@ -42,6 +43,7 @@ const icons = {
   scrollArrow,
   succesTick,
   file,
+  logoText,
 };
 
 export default icons;

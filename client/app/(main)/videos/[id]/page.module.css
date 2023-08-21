@@ -1,0 +1,149 @@
+.container {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  z-index: 5;
+  overflow: hidden;
+  background-color: white;
+}
+
+.content {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  background-color: #eeeff3;
+  column-gap: 40px;
+  overflow: auto;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.content::-webkit-scrollbar-button {
+  display: none;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #88d791;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #ecf5ed;
+}
+
+.left {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.player {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow: auto;
+}
+
+.video__info {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background-color: white;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.video__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.counts {
+  font-size: 18px;
+}
+
+.buttons {
+  display: flex;
+  column-gap: 15px;
+}
+
+.follow__button {
+  border: 1px solid rgb(170, 170, 170);
+  outline: none;
+  font-size: 18px;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 0.4em 1em;
+  border-radius: 50px;
+  font-weight: 700;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.right {
+  width: 400px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.right > h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.video__item {
+  display: flex;
+  column-gap: 10px;
+  height: 70px;
+  width: 90%;
+}
+
+.thumbnail {
+  height: 100%;
+  width: 100px;
+  border: 5px;
+  position: relative;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.author {
+  margin: 0;
+  color: grey;
+}

@@ -39,7 +39,8 @@ function padZero(number) {
 
 function timeValid(targetDate) {
   const now = new Date();
-  return now.getTime() < targetDate.getTime();
+  const expiryDate = new Date(targetDate);
+  return now.getTime() < expiryDate.getTime();
 }
 
 export { timeStamp, convertToDateTime, formatTime, timeValid };

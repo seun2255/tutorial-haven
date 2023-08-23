@@ -112,7 +112,7 @@ export default function Finance() {
             <div className={styles.history}>
               <div className={styles.history__details}>
                 <h4>Transactions</h4>
-                <h2>38</h2>
+                <h2>{user.transactions.length}</h2>
               </div>
               <div className={styles.dividing__line}></div>
               <div className={styles.history__details}>

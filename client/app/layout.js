@@ -36,11 +36,6 @@ import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 //   publicClient,
 // });
 
-export const metadata = {
-  title: "Tutorial Haven",
-  description: "Decentralized Video Streaming App",
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

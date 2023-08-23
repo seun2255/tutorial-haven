@@ -4,10 +4,6 @@ async function main() {
   const [deployer] = await ethers.getSigners();
 
   console.log("Deployers account:", deployer.address);
-  // console.log(
-  //   "Deployers account balance:",
-  //   (await deployer.getBalance()).toString()
-  // );
 
   //Token Contract
   const Haven = await ethers.getContractFactory("Haven");

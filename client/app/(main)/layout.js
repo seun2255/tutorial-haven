@@ -9,43 +9,50 @@ import icons from "../_assets/icons/icons";
 import { useEffect, useState } from "react";
 import { getUserData } from "../database";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/user";
-import { updateVideos } from "../redux/videos";
 import { setWalletModal } from "../redux/modals";
-import { useRouter } from "next/navigation";
 import ConnectWallet from "../_modals/connectWallet";
+import { timeValid } from "../utils/dateFunctions";
+import { connect } from "@/app/api";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db, getAllVideos } from "../database";
+import { getUserDetails } from "../database";
+import { login, updateUser } from "@/app/redux/user";
+import { updateVideos } from "@/app/redux/videos";
 
 export default function Wrapper({ children }) {
   const { connected } = useSelector((state) => state.user);
-  const [newUserModal, setNewUserModal] = useState(false);
-  const { walletModal } = useSelector((state) => state.modals);
+  const { walletModal, newUserModal } = useSelector((state) => state.modals);
 
   const dispatch = useDispatch();
 
-  const router = useRouter();
-
-  // useAccount({
-  //   onConnect({ address }) {
-  //     getUserData(address).then((data) => {
-  //       console.log("Logging in");
-  //       dispath(login(data.data));
-  //       dispath(updateVideos(data.videos));
-  //       if (data.new) setNewUserModal(true);
-  //     });
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   if (address) {
-  //     console.log(address);
-  //     getUserData(address).then((data) => {
-  //       dispath(login(data.data));
-  //       dispath(updateVideos(data.videos));
-  //     });
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const valid = localStorage.getItem("expiry");
+    if (valid) {
+      if (timeValid(valid)) {
+        connect().then((data) => {
+          dispatch(login(data.data));
+          dispatch(updateVideos(data.videos));
+          const unsubUser = onSnapshot(
+            doc(db, "users", data.data.address),
+            (doc) => {
+              getUserDetails(data.data.address).then((data) => {
+                dispatch(updateUser(data));
+              });
+            }
+          );
+          const unsubSchools = onSnapshot(
+            doc(db, "content", "videos"),
+            (doc) => {
+              getAllVideos().then((videos) => {
+                dispatch(updateVideos(videos));
+              });
+            }
+          );
+        });
+        localStorage.removeItem("expiry");
+      }
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -69,7 +76,7 @@ export default function Wrapper({ children }) {
         )}
       </div>
 
-      {newUserModal && <NewUser setModal={setNewUserModal} />}
+      {newUserModal && <NewUser />}
       {walletModal && <ConnectWallet />}
     </div>
   );

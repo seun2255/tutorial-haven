@@ -7,20 +7,22 @@ import icons from "@/app/_assets/icons/icons";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import Table from "./table";
-import { useBalance } from "wagmi";
 import { formatToTwoDecimalPlaces } from "@/app/utils/formatBalance";
 import { buyTokens, sellTokens } from "@/app/api";
+import { recordTransaction } from "@/app/database";
+import { timeStamp } from "@/app/utils/dateFunctions";
+import SuccesModal from "@/app/_modals/succedModal";
+import { useDispatch } from "react-redux";
 
 export default function Finance() {
   const { user } = useSelector((state) => state.user);
   const [coin, setCoin] = useState("xdc");
   const [swapAmount, setSwapAmount] = useState(0);
+  const [succes, setSucces] = useState(false);
+  const [succesText, setSuccesText] = useState("");
+  console.log(user);
 
-  const balance = useBalance({
-    address: user.address,
-    watch: true,
-    formatUnits: "ether",
-  });
+  const dispatch = useDispatch();
 
   const handleSwitch = () => {
     if (coin === "xdc") {
@@ -35,11 +37,34 @@ export default function Finance() {
       if (coin === "xdc") {
         const amount = swapAmount.toString();
         buyTokens(amount).then(() => {
-          console.log("Tokens bought");
+          console.log("got here");
+          recordTransaction(user.address, {
+            type: "Swap",
+            date: timeStamp(),
+            amount,
+            coin: "xdc",
+          }).then(() => {
+            setSuccesText("Bought Tokens");
+            setSucces(true);
+            setTimeout(() => {
+              setSucces(false);
+            }, 4000);
+          });
         });
       } else {
-        sellTokens(amount).then(() => {
-          console.log("Tokens sold");
+        sellTokens(swapAmount).then(() => {
+          recordTransaction(user.address, {
+            type: "Swap",
+            date: timeStamp(),
+            amount: swapAmount.toString(),
+            coin: "hvn",
+          }).then(() => {
+            setSuccesText("Sold Tokens");
+            setSucces(true);
+            setTimeout(() => {
+              setSucces(false);
+            }, 4000);
+          });
         });
       }
     } else {
@@ -62,9 +87,7 @@ export default function Finance() {
                 </div>
                 <div className={styles.token__details}>
                   <p className={styles}>xdc balance</p>
-                  <h3>
-                    {formatToTwoDecimalPlaces(balance.data.formatted)} xdc
-                  </h3>
+                  <h3>{formatToTwoDecimalPlaces(user.balance)} xdc</h3>
                 </div>
               </div>
               <div
@@ -79,7 +102,7 @@ export default function Finance() {
                 </div>
                 <div className={styles.token__details}>
                   <p className={styles}>Haven balance</p>
-                  <h3>{user.tokenBalance} Haven</h3>
+                  <h3>{formatToTwoDecimalPlaces(user.tokenBalance)} Haven</h3>
                 </div>
               </div>
             </div>
@@ -163,20 +186,21 @@ export default function Finance() {
       </div>
       <div className={styles.bottom__section}>
         <h2>Transactions</h2>
-        <Table data={data} />
+        <Table data={user.transactions} />
       </div>
+      {succes && <SuccesModal text={succesText} />}
     </section>
   );
 }
 
-const data = [
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-  { type: "support", date: "octorber 1st", amount: "50 hvn" },
-];
+// const data = [
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+//   { type: "support", date: "octorber 1st", amount: "50 hvn", coin: "xdc" },
+// ];

@@ -9,6 +9,7 @@ const Table = ({ data }) => {
             <th>Type</th>
             <th>Date</th>
             <th>Amount</th>
+            <th>Coin</th>
           </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@ const Table = ({ data }) => {
               <td>{item.type}</td>
               <td>{item.date}</td>
               <td>{item.amount}</td>
+              <td>{item.coin}</td>
             </tr>
           ))}
         </tbody>

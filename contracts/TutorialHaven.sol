@@ -18,9 +18,9 @@ contract TutorialHaven is ERC721 {
     }
 
     constructor(
-        string memory name,
-        string memory symbol
-    ) ERC721(name, symbol) {}
+    ) ERC721("Tutorial Haven", "THN") {
+
+    }
 
     function uploadVideo(
         string calldata _title,
@@ -45,13 +45,4 @@ contract TutorialHaven is ERC721 {
 
         return newItemId;
     }
-
-    // function mintToken(address tokenOwner) public returns (uint256) {
-    //     _tokenIds.increment();
-
-    //     uint256 newItemId = _tokenIds.current();
-    //     _mint(tokenOwner, newItemId);
-
-    //     return newItemId;
-    // }
 }

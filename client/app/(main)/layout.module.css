@@ -30,13 +30,16 @@
   margin-bottom: 30px;
 }
 
-.connect {
+.connect__button {
   background-color: #9ecca4;
-  font-size: 23px;
-  font-weight: 600;
-  color: white;
-  padding: 0.2em 1em;
-  border-radius: 5px;
-  cursor: pointer;
   border: none;
+  font-size: 1em;
+  box-sizing: border-box;
+  padding: 0.4em 0.8em;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0px 5px 32px #bec0bf;
+  cursor: pointer;
+  transition: transform 1s ease;
+  border-radius: 5px;
 }

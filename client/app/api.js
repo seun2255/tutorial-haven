@@ -7,9 +7,17 @@ const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_ID;
 
 const network = "xdcTestnet";
 
+const toFixed_norounding = (n, p) => {
+  var result = n.toFixed(p);
+  return result <= n ? result : (result - Math.pow(0.1, p)).toFixed(p);
+};
+
+/**
+ * Blockchain Integration
+ */
+
 const getSigner = async () => {
-  // const provider = new ethers.AlchemyProvider(ethers, alchemyApiKey);
-  const provider = new ethers.JsonRpcProvider("http://localhost:8545");
+  const provider = new ethers.JsonRpcProvider("https://rpc.apothem.network");
   const signer = await provider.getSigner();
   return signer;
 };
@@ -33,11 +41,21 @@ const getTokenContract = async () => {
   const signer = await getSigner();
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS,
-    CONTRACT.abi,
+    TOKENCONTRACT.abi,
     signer
   );
   return contract;
 };
+
+const connect = async () => {
+  var data;
+  const address = getAddress();
+  console.log(address);
+};
+
+/**
+ * Main Functions
+ */
 
 const uploadVideo = async (
   title,
@@ -76,4 +94,43 @@ const uploadVideo = async (
   });
 };
 
-export { uploadVideo };
+/**
+ * Transaction Functions
+ */
+
+const getTokenBalance = async (address) => {
+  const contract = await getContract();
+
+  const balanceBigNumber = await contract.balanceOf(address);
+  const balanceWei = balanceBigNumber.toString(); // Convert BigNumber to string
+
+  const balanceEther = ethers.formatEther(balanceWei);
+  console.log(balanceEther);
+
+  return balanceEther;
+};
+
+const buyTokens = async (amount) => {
+  const contract = await getTokenContract();
+
+  console.log(amount);
+  const etherAmount = ethers.parseEther(amount);
+
+  // Call the function and pass Ether
+  const tx = await contract.buyTokens({ value: etherAmount });
+
+  // Wait for the transaction to be mined
+  await tx.wait();
+
+  console.log("Tokens bought successfully!");
+};
+
+const sellTokens = async (amount) => {
+  const contract = await getTokenContract();
+
+  const tx = await contract.sellTokens(amount);
+
+  await tx.wait();
+};
+
+export { uploadVideo, buyTokens, sellTokens, getTokenBalance, connect };

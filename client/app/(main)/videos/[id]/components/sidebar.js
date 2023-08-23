@@ -61,7 +61,7 @@ export default function SideBar(props) {
                     }}
                   >
                     <div className={styles.icon__box}>
-                      <Image alt="icon" layout="fill" src={option.icon} />
+                      <Image alt="icon" fill src={option.icon} />
                     </div>
                     <span className={styles.nav__text}>{option.text}</span>
                   </div>

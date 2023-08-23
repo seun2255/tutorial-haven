@@ -14,6 +14,7 @@ contract Haven {
     uint8 public decimals;
 
     uint256 private _totalSupply;
+    uint256 tokenPrice = 1 ether/1000;
     
     mapping(address => uint) private balances;
     mapping(address => mapping(address => uint)) private allowances;
@@ -22,14 +23,41 @@ contract Haven {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
-    constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _initialSupply) {
-        name = _name;
-        symbol = _symbol;
-        decimals = _decimals;
+    constructor() {
+        name = "Haven";
+        symbol = "HVN";
+        decimals = 18;
 
-        _totalSupply += _initialSupply * 10 ** decimals;
+        _totalSupply += 1000 * 10 ** decimals;
         balances[msg.sender] = _totalSupply;
         emit Transfer(address(0), msg.sender, _totalSupply);
+    }
+
+    function buyTokens() external payable {
+    require(tokenPrice > 0, "Token price not set");
+    require(msg.value > 0, "Amount must be greater than 0");
+
+    uint256 tokenAmount = (msg.value * (10 ** decimals)) / tokenPrice;
+
+    balances[msg.sender] += tokenAmount;
+    _totalSupply += tokenAmount;
+
+    emit Transfer(address(0), msg.sender, tokenAmount);
+}
+
+function sellTokens(uint256 tokenAmount) external {
+        require(tokenAmount > 0, "Amount must be greater than 0");
+        require(balances[msg.sender] >= tokenAmount, "Insufficient balance");
+
+        uint256 ethAmount = (tokenAmount * tokenPrice);
+
+        balances[msg.sender] -= tokenAmount;
+        _totalSupply -= tokenAmount;
+
+        (bool sent, ) = msg.sender.call{value: ethAmount}("");
+        require(sent, "Failed to send Ether");
+
+        emit Transfer(msg.sender, address(0), tokenAmount);
     }
 
     function totalSupply() public view virtual returns (uint256) {

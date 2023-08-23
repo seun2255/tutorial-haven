@@ -14,7 +14,7 @@ export default function SideBar(props) {
   const [showText, setShowText] = useState(false);
   const [action, setAction] = useState("out");
   var pathname = usePathname();
-  if (pathname === "/app") pathname = "/videos";
+  if (pathname === "/") pathname = "/videos";
 
   /**
    * Event functions
@@ -65,9 +65,9 @@ export default function SideBar(props) {
    * Static variables
    */
   const options = [
-    { icon: icons.settings, text: "Videos", link: "/" },
-    { icon: icons.settings, text: "Create", link: "/create" },
-    { icon: icons.settings, text: "Recent sheet", link: "/recent" },
+    { icon: icons.home, text: "Videos", link: "/" },
+    { icon: icons.create, text: "Create", link: "/create" },
+    { icon: icons.finance, text: "Finances", link: "/finances" },
     { icon: icons.settings, text: "Settings", link: "/settings" },
   ];
 
@@ -75,7 +75,7 @@ export default function SideBar(props) {
     <animated.div className={styles.container} style={sidebar}>
       <div className={styles.logo__box}>
         <div className={styles.logo}>
-          <Image alt="logo" src={icons.logo} layout="fill" />
+          <Image alt="logo" src={icons.logo} fill />
         </div>
         {showText && (
           <animated.span className={styles.logo__text} style={animateText}>
@@ -85,7 +85,7 @@ export default function SideBar(props) {
       </div>
       <div className={styles.open__box} onClick={handleExpand}>
         <animated.div className={styles.open__icon} style={menuAnimation}>
-          <Image alt="logo" src={icons.expand} layout="fill" />
+          <Image alt="logo" src={icons.expand} fill />
         </animated.div>
       </div>
       <animated.div className={styles.nav__buttons} style={buttons}>
@@ -106,7 +106,7 @@ export default function SideBar(props) {
                 }}
               >
                 <div className={styles.icon__box}>
-                  <Image alt="icon" layout="fill" src={option.icon} />
+                  <Image alt="icon" fill src={option.icon} />
                 </div>
                 {showText && (
                   <animated.span

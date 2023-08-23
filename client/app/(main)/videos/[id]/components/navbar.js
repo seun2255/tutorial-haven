@@ -25,12 +25,12 @@ export default function Navbar(props) {
       <div className={styles.left__items}>
         <div className={styles.open__box} onClick={handleExpand}>
           <animated.div className={styles.open__icon} style={menuAnimation}>
-            <Image alt="logo" src={icons.expand} layout="fill" />
+            <Image alt="logo" src={icons.expand} fill />
           </animated.div>
         </div>
         <div className={styles.logo__box}>
           <div className={styles.logo}>
-            <Image alt="logo" src={icons.logo} layout="fill" />
+            <Image alt="logo" src={icons.logo} fill />
           </div>
           <span className={styles.logo__text}>
             <Image src={icons.logoText} alt="text" fill />
@@ -43,7 +43,7 @@ export default function Navbar(props) {
             placeholder="Search...."
           />
           <div className={styles.search__icon}>
-            <Image alt="searh" layout="fill" src={icons.search} />
+            <Image alt="searh" fill src={icons.search} />
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ export default function Navbar(props) {
           <div className={styles.profile__pic}>
             <Image
               alt="user"
-              layout="fill"
+              fill
               src={user.profilePic === "" ? icons.profile : user.profilePic}
             />
           </div>

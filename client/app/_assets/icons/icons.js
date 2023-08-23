@@ -20,6 +20,12 @@ import succesTick from "./succesTick.svg";
 import file from "./file.svg";
 import plus from "./plus.svg";
 import logoText from "./logoText.svg";
+import create from "./create.svg";
+import finance from "./finance.svg";
+import home from "./home.svg";
+import xdcLogo from "./xdcLogo.svg";
+import change from "./switch.svg";
+import arrowDown from "./arrowDown.svg";
 
 const icons = {
   cancel,
@@ -44,6 +50,12 @@ const icons = {
   succesTick,
   file,
   logoText,
+  create,
+  finance,
+  home,
+  xdcLogo,
+  change,
+  arrowDown,
 };
 
 export default icons;

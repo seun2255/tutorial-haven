@@ -7,7 +7,6 @@ import Image from "next/image";
 
 export default function VideoCard(props) {
   const { video } = props;
-  console.log(video);
 
   return (
     <Link href={`/videos/${video.id}`}>

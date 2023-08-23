@@ -70,7 +70,7 @@ export default function Settings() {
                   visible={true}
                 />
               ) : (
-                <Image layout="fill" src={pic} />
+                <Image fill src={pic} />
               )}
             </div>
             <label htmlFor="upload" className={styles.upload__button}>

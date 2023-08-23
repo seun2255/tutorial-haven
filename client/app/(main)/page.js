@@ -42,7 +42,7 @@ export default function Home() {
           //   e.preventDefault();
           // }}
         >
-          <div class="fading-mask"></div>
+          <div className="fading-mask"></div>
           {categories.map((category, id) => {
             return (
               <div className={styles.category} key={id}>
@@ -53,8 +53,8 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.content}>
-        {videos.map((video) => {
-          return <VideoCard video={video} />;
+        {videos.map((video, id) => {
+          return <VideoCard video={video} key={id} />;
         })}
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { timeStamp } from "./utils/dateFunctions";
+import { getTokenBalance } from "./api";
 
 const db = getFirestore(app);
 
@@ -79,6 +80,8 @@ const getUserDetails = async (address) => {
     data[doc.id] = doc.data();
   });
   const details = data[address];
+  const balance = await getTokenBalance(address);
+  details.tokenBalance = balance;
   return details;
 };
 

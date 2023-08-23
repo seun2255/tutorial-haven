@@ -4,35 +4,35 @@ import { useDispatch } from "react-redux";
 import { setWalletModal } from "@/app/redux/modals";
 import { login, updateUser } from "@/app/redux/user";
 import { updateVideos } from "@/app/redux/videos";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { connect } from "@/app/api";
 
 export default function ConnectWallet() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleArConnect = async () => {
-    const { user, videos } = await arconnect();
-    dispatch(login(user));
-    dispatch(updateVideos(videos));
-    dispatch(setWalletModal(false));
-  };
+  // const handleArConnect = async () => {
+  //   const { user, videos } = await arconnect();
+  //   dispatch(login(user));
+  //   dispatch(updateVideos(videos));
+  //   dispatch(setWalletModal(false));
+  // };
 
   const handleConnect = async () => {
-    connect().then((data) => {
-      dispatch(login(data.user));
-      dispatch(updateVideos(data.videos));
-      dispatch(setWalletModal(false));
-      console.log(data.user);
-    });
+    connect();
   };
 
   const popUpEffect = useSpring({
-    from: { opacity: 0, top: "200px" },
-    to: { opacity: 1, top: "0px" },
+    opacity: open ? 1 : 0,
+    top: open ? "0px" : "200px",
     config: { duration: 150 },
   });
+
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
   return (
     <div
@@ -62,8 +62,8 @@ export default function ConnectWallet() {
             <h2 className={styles.title}>Connect Wallet</h2>
             <p className={styles.details}>
               In order to view and create content you need to connect to your
-              arweave wallet <br /> Tutorial haven supports two wallets,
-              Arweave.app and ArConnect
+              wallet <br /> Tutorial haven supports connection with metamask
+              wallet
             </p>
             <div className={styles.buttons}>
               <button className={styles.button} onClick={handleConnect}>

@@ -5,13 +5,13 @@ import styles from "./navbar.module.css";
 import icons from "@/app/_assets/icons/icons";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Connect } from "./connectButton";
-import { useAccount } from "wagmi";
+import { setWalletModal } from "../redux/modals";
 import { getSigner } from "../api";
 
 export default function Navbar() {
   const { connected, user } = useSelector((state) => state.user);
-  const { isConnected, address } = useAccount();
+
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
@@ -22,7 +22,7 @@ export default function Navbar() {
           placeholder="Search...."
         />
         <div className={styles.search__icon}>
-          <Image alt="searh" layout="fill" src={icons.search} />
+          <Image alt="searh" fill src={icons.search} />
         </div>
       </div>
       {connected ? (
@@ -30,14 +30,19 @@ export default function Navbar() {
           <div className={styles.profile__pic}>
             <Image
               alt="user"
-              layout="fill"
+              fill
               src={user.profilePic === "" ? icons.profile : user.profilePic}
             />
           </div>
           <span className={styles.username}>{user.username}</span>
         </div>
       ) : (
-        <Connect />
+        <button
+          className={styles.connect__button}
+          onClick={() => dispatch(setWalletModal(true))}
+        >
+          Connect
+        </button>
       )}
     </div>
   );

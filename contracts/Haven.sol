@@ -14,7 +14,7 @@ contract Haven {
     uint8 public decimals;
 
     uint256 private _totalSupply;
-    uint256 tokenPrice = 1 ether/1000;
+    uint256 tokenPrice = 1000000000000000;
     
     mapping(address => uint) private balances;
     mapping(address => mapping(address => uint)) private allowances;
@@ -48,7 +48,7 @@ contract Haven {
 function sellTokens(uint256 tokenAmount) external {
         require(tokenAmount > 0, "Amount must be greater than 0");
         require(balances[msg.sender] >= tokenAmount, "Insufficient balance");
-
+        
         uint256 ethAmount = (tokenAmount * tokenPrice);
 
         balances[msg.sender] -= tokenAmount;
@@ -66,6 +66,10 @@ function sellTokens(uint256 tokenAmount) external {
 
     function balanceOf(address account) public view virtual returns (uint256) {
         return balances[account];
+    }
+
+     function getEthBalance() external view returns (uint256) {
+        return msg.sender.balance;
     }
 
     function allowance(address owner, address spender) public view virtual returns (uint256) {

@@ -37,4 +37,9 @@ function padZero(number) {
   return number.toString().padStart(2, "0");
 }
 
-export { timeStamp, convertToDateTime, formatTime };
+function timeValid(targetDate) {
+  const now = new Date();
+  return now.getTime() < targetDate.getTime();
+}
+
+export { timeStamp, convertToDateTime, formatTime, timeValid };

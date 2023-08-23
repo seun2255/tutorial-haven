@@ -42,6 +42,7 @@ const createUser = async (address) => {
     videos: [],
     lives: [],
     address: address,
+    transactions: [],
   };
   var data = {};
   const userData = await getDocs(collection(db, "users"));
@@ -80,8 +81,10 @@ const getUserDetails = async (address) => {
     data[doc.id] = doc.data();
   });
   const details = data[address];
-  const balance = await getTokenBalance(address);
-  details.tokenBalance = balance;
+  const balances = await getTokenBalance(address);
+  console.log("Balances: ", balances);
+  details.balance = balances.ethBalanceEther;
+  details.tokenBalance = balances.tokenBalanceEther;
   return details;
 };
 
@@ -105,8 +108,8 @@ const getUserData = async (address) => {
   if (!condition) await createUser(address);
 
   data = await getUserDetails(address);
-  // const videos = await getAllVideos();
-  const videos = tempVideos;
+  const videos = await getAllVideos();
+  // const videos = tempVideos;
 
   if (!condition) {
     return {
@@ -150,14 +153,18 @@ const uploadNewVideo = async (
   });
 
   const videoDetails = {
+    id: data1["videos"].length + 1,
     title,
     description,
     url,
-    thumbnail,
+    thumbnail: thumbnail
+      ? thumbnail
+      : "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
     author,
     author_dp,
     tags,
     duration,
+    payementAddress: address,
   };
 
   data1["videos"].push(videoDetails);
@@ -167,7 +174,27 @@ const uploadNewVideo = async (
   await setDoc(doc(db, "users", address), data2[address]);
 };
 
-export { getUserData, updateUserProfile, uploadNewVideo, getUserDetails };
+const recordTransaction = async (address, details) => {
+  var data = {};
+  const userData = await getDocs(collection(db, "users"));
+  userData.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data();
+  });
+  const user = data[address];
+  user.transactions.unshift(details);
+  await setDoc(doc(db, "users", address), user);
+};
+
+export {
+  getUserData,
+  updateUserProfile,
+  uploadNewVideo,
+  getUserDetails,
+  db,
+  recordTransaction,
+  getAllVideos,
+};
 
 const tempVideos = [
   {

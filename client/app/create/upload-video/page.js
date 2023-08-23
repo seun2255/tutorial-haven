@@ -46,7 +46,7 @@ export default function UploadVideo() {
     const video = document.createElement("video");
 
     video.preload = "metadata";
-    video.src = URL.createObjectURL(selectedFile);
+    video.src = URL.createObjectURL(uploadedFile);
 
     video.onloadedmetadata = function () {
       const videoDuration = video.duration;
@@ -103,9 +103,12 @@ export default function UploadVideo() {
     uploadVideo(title, description, videoLink, thumbnail, tags, duration).then(
       () => {
         setSaved(true);
+        const now = new Date();
+        const expiryTime = new Date(now.getTime() + 2 * 60 * 1000);
+        localStorage.setItem("expiry", expiryTime);
         setTimeout(() => {
           router.push("/");
-        }, 1000);
+        }, 2000);
       }
     );
   };
@@ -252,7 +255,7 @@ export default function UploadVideo() {
         </div>
       </div>
 
-      {saving && <ProgressModal />}
+      {saving && <ProgressModal loading={saved} />}
     </div>
   );
 }

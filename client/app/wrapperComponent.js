@@ -31,7 +31,7 @@ export default function Wrapper({ children }) {
         )}
       </div>
 
-      {newUserModal && <NewUser setModal={setNewUserModal} />}
+      {newUserModal && <NewUser />}
     </div>
   );
 }

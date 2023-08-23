@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import CONTRACT from "../contracts/TutorialHaven.json";
 import TOKENCONTRACT from "../contracts/Haven.json";
-import { uploadNewVideo, getUserDetails } from "./database";
+import { uploadNewVideo, getUserDetails, getUserData } from "./database";
 
 const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_ID;
 
@@ -17,9 +17,53 @@ const toFixed_norounding = (n, p) => {
  */
 
 const getSigner = async () => {
-  const provider = new ethers.JsonRpcProvider("https://rpc.apothem.network");
-  const signer = await provider.getSigner();
-  return signer;
+  // const provider = new ethers.providers.JsonRpcProvider({
+  //   url: "https://rpc.apothem.network",
+  // });
+
+  // if (window.ethereum) {
+  //   try {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     console.log("here 1");
+  //     await provider.send("eth_requestAccounts", []);
+  //     console.log("here 2");
+  //     const signer = provider.getSigner();
+  //     console.log("here 3");
+  //     return signer;
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // } else {
+  //   console.error("BlocksPay is not detected in the browser");
+  // }
+
+  // const provider = new ethers.providers.Web3Provider(window.ethereum);
+  // console.log("here 1");
+  // const signer = provider.getSigner();
+  // return signer;
+
+  if (window.ethereum) {
+    // const apothemChainId = "0x33"; // Chain ID for Apothem Testnet
+
+    // // Check if the user is on the Apothem network
+    // if (window.ethereum.chainId !== apothemChainId) {
+    //   try {
+    //     // Request the user to switch to the Apothem network
+    //     await window.ethereum.request({
+    //       method: "wallet_switchEthereumChain",
+    //       params: [{ chainId: apothemChainId }],
+    //     });
+    //   } catch (error) {
+    //     console.error("Failed to switch network:", error);
+    //   }
+    // }
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    return signer;
+  } else {
+    console.log("Wallet not detected.");
+  }
 };
 
 const getAddress = async () => {
@@ -49,8 +93,9 @@ const getTokenContract = async () => {
 
 const connect = async () => {
   var data;
-  const address = getAddress();
-  console.log(address);
+  const address = await getAddress();
+  data = await getUserData(address);
+  return data;
 };
 
 /**
@@ -99,15 +144,22 @@ const uploadVideo = async (
  */
 
 const getTokenBalance = async (address) => {
-  const contract = await getContract();
+  const contract = await getTokenContract();
 
-  const balanceBigNumber = await contract.balanceOf(address);
-  const balanceWei = balanceBigNumber.toString(); // Convert BigNumber to string
+  var ethBalance = await contract.getEthBalance();
+  const ethBalanceWei = ethBalance.toString(); // Convert BigNumber to string
 
-  const balanceEther = ethers.formatEther(balanceWei);
-  console.log(balanceEther);
+  const ethBalanceEther = ethers.formatEther(ethBalanceWei);
 
-  return balanceEther;
+  const tokenBalance = await contract.balanceOf(address);
+  const tokenBalanceWei = tokenBalance.toString(); // Convert BigNumber to string
+
+  const tokenBalanceEther = ethers.formatEther(tokenBalanceWei);
+
+  return {
+    tokenBalanceEther,
+    ethBalanceEther,
+  };
 };
 
 const buyTokens = async (amount) => {
@@ -121,8 +173,6 @@ const buyTokens = async (amount) => {
 
   // Wait for the transaction to be mined
   await tx.wait();
-
-  console.log("Tokens bought successfully!");
 };
 
 const sellTokens = async (amount) => {
@@ -133,4 +183,34 @@ const sellTokens = async (amount) => {
   await tx.wait();
 };
 
-export { uploadVideo, buyTokens, sellTokens, getTokenBalance, connect };
+const sendXDC = async (address, amount) => {
+  const signer = await getSigner();
+
+  const amountInWei = ethers.parseEther(amount.toString());
+
+  const transaction = await signer.sendTransaction({
+    to: address,
+    value: amountInWei,
+  });
+
+  // Wait for the transaction to be confirmed
+  const receipt = await transaction.wait();
+};
+
+const sendHaven = async (address, amount) => {
+  const contract = await getTokenContract();
+
+  const tx = await contract.transfer(address, amount);
+
+  await tx.wait();
+};
+
+export {
+  uploadVideo,
+  buyTokens,
+  sellTokens,
+  getTokenBalance,
+  connect,
+  sendXDC,
+  sendHaven,
+};

@@ -4,8 +4,9 @@ function formatToTwoDecimalPlaces(numberString) {
     return "Invalid number";
   }
 
-  const formattedNumber = parsedNumber.toFixed(2);
-  return formattedNumber;
+  const truncatedNumber = Math.floor(parsedNumber * 100) / 100;
+
+  return truncatedNumber.toFixed(2);
 }
 
 export { formatToTwoDecimalPlaces };

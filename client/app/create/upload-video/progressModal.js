@@ -8,7 +8,7 @@ export default function ProgressModal(props) {
 
   return (
     <div className={styles.container}>
-      {loading ? (
+      {!loading ? (
         <div className={styles.main}>
           <h2 className={styles.title}>Saving Video</h2>
           <hr className={styles.line__break} />

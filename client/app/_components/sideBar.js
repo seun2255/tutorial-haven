@@ -68,7 +68,7 @@ export default function SideBar(props) {
     { icon: icons.home, text: "Videos", link: "/" },
     { icon: icons.create, text: "Create", link: "/create" },
     { icon: icons.finance, text: "Finances", link: "/finances" },
-    { icon: icons.settings, text: "Settings", link: "/settings" },
+    { icon: icons.settings, text: "Settings", link: "/profile/update" },
   ];
 
   return (

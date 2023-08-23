@@ -5,13 +5,22 @@ import Image from "next/image";
 import styles from "./supportModal.module.css";
 import icons from "@/app/_assets/icons/icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { sendXDC, sendHaven } from "../api";
+import { recordTransaction } from "../database";
+import SuccesModal from "./succedModal";
+import { ThreeDots } from "react-loader-spinner";
+import { timeStamp } from "../utils/dateFunctions";
 
 export default function SupportModal(props) {
-  const { setModal } = props;
+  const { setModal, payementAddress } = props;
+  const { user } = useSelector((state) => state.user);
   const [custom, setCustom] = useState(true);
   const [tipAmount, setTipAmount] = useState(25);
   const [selectedAmount, setSelectedAmount] = useState(5);
-  const [selectedCurrency, setSelectedCurrency] = useState(1);
+  const [selectedCurrency, setSelectedCurrency] = useState(0);
+  const [succes, setSucces] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const selectPrice = (price, id) => {
     setTipAmount(price);
@@ -21,6 +30,51 @@ export default function SupportModal(props) {
 
   const selectCurrecy = (id) => {
     setSelectedCurrency(id);
+  };
+
+  const handleSend = () => {
+    setLoading(true);
+    console.log("Reached here");
+    if (user.address !== payementAddress) {
+      if (selectedCurrency === 0) {
+        if (tipAmount <= user.balance) {
+          sendXDC(payementAddress, tipAmount).then(() => {
+            recordTransaction(user.address, {
+              type: "Support",
+              date: timeStamp(),
+              amount: tipAmount,
+              coin: "xdc",
+            }).then(() => {
+              recordTransaction(payementAddress, {
+                type: "Gift",
+                date: timeStamp(),
+                amount: tipAmount,
+                coin: "xdc",
+              }).then(() => {
+                console.log("Got here");
+                setSucces(true);
+                setLoading(false);
+                setTimeout(() => {
+                  setSucces(false);
+                }, 4000);
+              });
+            });
+          });
+        } else {
+          alert("You dont have enough xdc");
+        }
+      } else {
+        if (tipAmount <= user.balance) {
+          sendHaven(payementAddress, tipAmount).then(() => {
+            console.log("HVN sent");
+          });
+        } else {
+          alert("You dont have enough hvn");
+        }
+      }
+    } else {
+      alert("You can't send yourself gifts lol");
+    }
   };
 
   return (
@@ -92,13 +146,23 @@ export default function SupportModal(props) {
         <p className={styles.tip__details}>
           Send a tip directly from your attached card.
         </p>
-        <button
-          className={styles.send__button}
-        >{`Send a ${tipAmount} Tip`}</button>
+        <button className={styles.send__button} onClick={handleSend}>
+          {loading ? (
+            <ThreeDots
+              height="50%"
+              width="100px"
+              color="#ffffff"
+              visible={true}
+            />
+          ) : (
+            `Send a ${tipAmount} ${currency[selectedCurrency]} Tip`
+          )}
+        </button>
       </div>
+      {succes && <SuccesModal text={"Donation recieved"} />}
     </div>
   );
 }
 
 const amount = [1, 5, 10, 25, 100];
-const currency = ["xdc", "haven"];
+const currency = ["xdc", "hvn"];

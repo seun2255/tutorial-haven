@@ -4,6 +4,7 @@ import styles from "./videocard.module.css";
 import Link from "next/link";
 import icons from "@/app/_assets/icons/icons";
 import Image from "next/image";
+import images from "../_assets/images/images";
 
 export default function VideoCard(props) {
   const { video } = props;
@@ -12,7 +13,11 @@ export default function VideoCard(props) {
     <Link href={`/videos/${video.id}`}>
       <div className={styles.main}>
         <div className={styles.thumbnail}>
-          <Image src={video.thumbnail} fill alt="thumbnail" />
+          <Image
+            src={video.thumbnail ? video.thumbnail : images.thumbnail}
+            fill
+            alt="thumbnail"
+          />
         </div>
         <div className={styles.details}>
           <div className={styles.dp}>

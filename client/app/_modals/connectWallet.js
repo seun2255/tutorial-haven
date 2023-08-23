@@ -4,9 +4,13 @@ import { useDispatch } from "react-redux";
 import { setWalletModal } from "@/app/redux/modals";
 import { login, updateUser } from "@/app/redux/user";
 import { updateVideos } from "@/app/redux/videos";
+import { setNewUserModal } from "@/app/redux/modals";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { connect } from "@/app/api";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db, getAllVideos } from "../database";
+import { getUserDetails } from "../database";
 
 export default function ConnectWallet() {
   const dispatch = useDispatch();
@@ -21,7 +25,28 @@ export default function ConnectWallet() {
   // };
 
   const handleConnect = async () => {
-    connect();
+    connect().then((data) => {
+      console.log("Logging in");
+      dispatch(login(data.data));
+      dispatch(updateVideos(data.videos));
+      dispatch(setWalletModal(false));
+      setTimeout(() => {
+        if (data.new) dispatch(setNewUserModal(true));
+      }, 2000);
+      const unsubUser = onSnapshot(
+        doc(db, "users", data.data.address),
+        (doc) => {
+          getUserDetails(data.data.address).then((data) => {
+            dispatch(updateUser(data));
+          });
+        }
+      );
+      const unsubSchools = onSnapshot(doc(db, "content", "videos"), (doc) => {
+        getAllVideos().then((videos) => {
+          dispatch(updateVideos(videos));
+        });
+      });
+    });
   };
 
   const popUpEffect = useSpring({

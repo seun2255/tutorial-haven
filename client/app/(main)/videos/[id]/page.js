@@ -15,22 +15,24 @@ import SupportModal from "@/app/_modals/supportModal";
 export default function Video({ params }) {
   const { user } = useSelector((state) => state.user);
   const { videos } = useSelector((state) => state.videos);
-  const [suppportModal, setSupportModal] = useState(true);
+  const [suppportModal, setSupportModal] = useState(false);
   const [sidebar, setSidebar] = useState(false);
   const videoRef = useRef(null);
+  const video = videos[params.id];
+  console.log(video);
 
-  const video = {
-    id: 1,
-    title: "The Jazz hop cafe stream",
-    thumbnail:
-      "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
-    url: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
-    details: "sckasjchlasn asjlhfsk asljhjksaj aslhksaf",
-    author: "Seun",
-    author_id: "1",
-    author_dp:
-      "https://bafybeignovnejiid7cw44lse7764gphel4uln63ng2g42dqzqvtfbxqfyi.ipfs.dweb.link/profile.svg",
-  };
+  // const video = {
+  //   id: 1,
+  //   title: "The Jazz hop cafe stream",
+  //   thumbnail:
+  //     "https://bafybeif6xfbv6wlrcw25cd76n3tjwzeznv4yegru5z7hmka5akksdkjnri.ipfs.dweb.link/beuty.png",
+  //   url: "https://kdzxfxxxva6r3w5ts3uwnrrmqvq2un73dzrpp6dzjxiiy4ai7a2q.arweave.net/UPNy3veoPR3bs5bpZsYshWGqN_seYvf4eU3QjHAI-DU/",
+  //   details: "sckasjchlasn asjlhfsk asljhjksaj aslhksaf",
+  //   author: "Seun",
+  //   author_id: "1",
+  //   author_dp:
+  //     "https://bafybeignovnejiid7cw44lse7764gphel4uln63ng2g42dqzqvtfbxqfyi.ipfs.dweb.link/profile.svg",
+  // };
 
   return (
     <section className={styles.container}>
@@ -87,7 +89,12 @@ export default function Video({ params }) {
         </div>
         <SideBar expanded={sidebar} />
       </div>
-      {suppportModal && <SupportModal setModal={setSupportModal} />}
+      {suppportModal && (
+        <SupportModal
+          setModal={setSupportModal}
+          payementAddress={video.payementAddress}
+        />
+      )}
     </section>
   );
 }

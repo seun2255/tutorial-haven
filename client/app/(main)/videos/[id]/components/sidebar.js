@@ -33,10 +33,10 @@ export default function SideBar(props) {
    * Static variables
    */
   const options = [
-    { icon: icons.settings, text: "Videos", link: "/" },
-    { icon: icons.settings, text: "Create", link: "/create" },
-    { icon: icons.settings, text: "Recent sheet", link: "/recent" },
-    { icon: icons.settings, text: "Settings", link: "/settings" },
+    { icon: icons.home, text: "Videos", link: "/" },
+    { icon: icons.create, text: "Create", link: "/create" },
+    { icon: icons.finance, text: "Finances", link: "/finances" },
+    { icon: icons.settings, text: "Settings", link: "/profile/update" },
   ];
 
   return (

@@ -26,6 +26,7 @@ import home from "./home.svg";
 import xdcLogo from "./xdcLogo.svg";
 import change from "./switch.svg";
 import arrowDown from "./arrowDown.svg";
+import requests from "./requests.svg";
 
 const icons = {
   cancel,
@@ -56,6 +57,7 @@ const icons = {
   xdcLogo,
   change,
   arrowDown,
+  requests,
 };
 
 export default icons;

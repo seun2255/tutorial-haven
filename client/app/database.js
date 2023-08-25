@@ -98,6 +98,17 @@ const getAllVideos = async () => {
   return details;
 };
 
+const getAllRequests = async () => {
+  var data = {};
+  const requestData = await getDocs(collection(db, "content"));
+  requestData.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data().data;
+  });
+  const details = data["requests"];
+  return details;
+};
+
 /**
  * MAIN FUNCTIONS
  */
@@ -108,19 +119,21 @@ const getUserData = async (address) => {
 
   data = await getUserDetails(address);
   const videos = await getAllVideos();
-  // const videos = tempVideos;
+  const requests = await getAllRequests();
 
   if (!condition) {
     return {
       data,
       new: true,
       videos,
+      requests,
     };
   } else {
     return {
       data,
       new: false,
       videos,
+      requests,
     };
   }
 };
@@ -176,6 +189,29 @@ const uploadNewVideo = async (
   await setDoc(doc(db, "users", address), data2[address]);
 };
 
+const createRequest = async (requestDetails, address) => {
+  var data1 = {};
+  var data2 = {};
+  const requestData = await getDocs(collection(db, "content"));
+  const userData = await getDocs(collection(db, "users"));
+
+  requestData.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data1[doc.id] = doc.data().data;
+  });
+
+  userData.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data2[doc.id] = doc.data();
+  });
+
+  data1["requests"].push(requestDetails);
+  data2[address].requests.push(requestDetails);
+
+  await setDoc(doc(db, "content", "requests"), { data: data1["requests"] });
+  await setDoc(doc(db, "users", address), data2[address]);
+};
+
 const recordTransaction = async (address, details) => {
   var data = {};
   const userData = await getDocs(collection(db, "users"));
@@ -196,6 +232,8 @@ export {
   db,
   recordTransaction,
   getAllVideos,
+  getAllRequests,
+  createRequest,
 };
 
 const tempVideos = [

@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./user";
 import modalsReducer from "./modals";
 import videosReducer from "./videos";
+import requestsReducer from "./requests";
 import tabReducer from "./tab";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -18,6 +19,7 @@ export const store = configureStore({
     user: userReducer,
     modals: modalsReducer,
     videos: videosReducer,
+    requests: requestsReducer,
   },
 });
 

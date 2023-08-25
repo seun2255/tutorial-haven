@@ -14,10 +14,11 @@ import ConnectWallet from "../_modals/connectWallet";
 import { timeValid } from "../utils/dateFunctions";
 import { connect } from "@/app/api";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db, getAllVideos } from "../database";
+import { db, getAllVideos, getAllRequests } from "../database";
 import { getUserDetails } from "../database";
 import { login, updateUser } from "@/app/redux/user";
 import { updateVideos } from "@/app/redux/videos";
+import { updateRequests } from "../redux/requests";
 
 export default function Wrapper({ children }) {
   const { connected } = useSelector((state) => state.user);
@@ -40,11 +41,19 @@ export default function Wrapper({ children }) {
               });
             }
           );
-          const unsubSchools = onSnapshot(
+          const unsubVideos = onSnapshot(
             doc(db, "content", "videos"),
             (doc) => {
               getAllVideos().then((videos) => {
                 dispatch(updateVideos(videos));
+              });
+            }
+          );
+          const unsubRequests = onSnapshot(
+            doc(db, "content", "requests"),
+            (doc) => {
+              getAllRequests().then((requests) => {
+                dispatch(updateRequests(requests));
               });
             }
           );

@@ -66,7 +66,26 @@ export default function SupportModal(props) {
       } else {
         if (tipAmount <= user.balance) {
           sendHaven(payementAddress, tipAmount).then(() => {
-            console.log("HVN sent");
+            recordTransaction(user.address, {
+              type: "Support",
+              date: timeStamp(),
+              amount: tipAmount,
+              coin: "hvn",
+            }).then(() => {
+              recordTransaction(payementAddress, {
+                type: "Gift",
+                date: timeStamp(),
+                amount: tipAmount,
+                coin: "xdc",
+              }).then(() => {
+                console.log("Got here");
+                setSucces(true);
+                setLoading(false);
+                setTimeout(() => {
+                  setSucces(false);
+                }, 4000);
+              });
+            });
           });
         } else {
           alert("You dont have enough hvn");

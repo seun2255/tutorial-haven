@@ -1,7 +1,12 @@
 import { ethers } from "ethers";
 import CONTRACT from "../contracts/TutorialHaven.json";
 import TOKENCONTRACT from "../contracts/Haven.json";
-import { uploadNewVideo, getUserDetails, getUserData } from "./database";
+import {
+  uploadNewVideo,
+  getUserDetails,
+  getUserData,
+  createRequest,
+} from "./database";
 
 const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_ID;
 
@@ -254,6 +259,32 @@ const payForAccess = async (id, cost) => {
   return true;
 };
 
+const makeRequest = async (requestDetails, coin) => {
+  const contract = await getTokenContract();
+  const address = await getAddress();
+  const signer = await getSigner();
+
+  const rewardAmount = ethers.parseEther(requestDetails.reward.toString());
+
+  if (coin === "xdc") {
+    const transaction = await signer.sendTransaction({
+      to: address,
+      value: rewardAmount,
+    });
+    await transaction.wait();
+  } else {
+    const transaction = await contract.transfer(
+      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+      rewardAmount
+    );
+    await transaction.wait();
+  }
+
+  createRequest(requestDetails, address).then(() => {
+    console.log("request created");
+  });
+};
+
 export {
   uploadVideo,
   buyTokens,
@@ -264,4 +295,5 @@ export {
   sendHaven,
   confirmAccess,
   payForAccess,
+  makeRequest,
 };

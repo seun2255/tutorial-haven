@@ -108,23 +108,41 @@ const uploadVideo = async (
   url,
   thumbnail,
   tags,
-  duration
+  duration,
+  access,
+  cost
 ) => {
   const contract = await getContract();
   const address = await getAddress();
 
   const author = await getUserDetails(address);
 
-  let txn = await contract.uploadVideo(
+  const costAmount = ethers.parseEther(cost.toString());
+
+  let txn = await contract.uploadVideo({
     title,
     description,
     url,
     thumbnail,
-    author.username
-  );
+    author: author.username,
+    paymentAddress: address,
+    access,
+    cost: costAmount,
+  });
   await txn.wait();
 
+  const filter = contract.filters.VideoUploaded();
+  const events = await contract.queryFilter(filter, txn.blockNumber);
+
+  console.log(events);
+  const newItemId = events[events.length - 1].args.tokenId;
+  console.log(newItemId);
+  const itemId = newItemId.toString();
+  console.log(newItemId.toString());
+  const id = parseInt(itemId, 10);
+
   uploadNewVideo(
+    id,
     title,
     description,
     url,
@@ -133,10 +151,18 @@ const uploadVideo = async (
     author.profilePic,
     address,
     tags,
-    duration
+    duration,
+    cost
   ).then(() => {
     console.log("Video Uploaded");
   });
+};
+
+const confirmAccess = async (address, token) => {
+  const contract = await getContract();
+
+  const allowed = await contract.checkAccess(token);
+  return allowed;
 };
 
 /**
@@ -165,7 +191,6 @@ const getTokenBalance = async (address) => {
 const buyTokens = async (amount) => {
   const contract = await getTokenContract();
 
-  console.log(amount);
   const etherAmount = ethers.parseEther(amount);
 
   // Call the function and pass Ether
@@ -178,7 +203,9 @@ const buyTokens = async (amount) => {
 const sellTokens = async (amount) => {
   const contract = await getTokenContract();
 
-  const tx = await contract.sellTokens(amount);
+  const tokenAmount = ethers.parseEther(amount);
+
+  const tx = await contract.sellTokens(tokenAmount);
 
   await tx.wait();
 };
@@ -200,9 +227,31 @@ const sendXDC = async (address, amount) => {
 const sendHaven = async (address, amount) => {
   const contract = await getTokenContract();
 
-  const tx = await contract.transfer(address, amount);
+  const tokenAmount = ethers.parseEther(amount.toString());
+
+  const tx = await contract.transfer(address, tokenAmount);
 
   await tx.wait();
+};
+
+const payForAccess = async (id, cost) => {
+  const tokenContract = await getTokenContract();
+  const contract = await getContract();
+
+  const costAmount = ethers.parseEther(cost.toString());
+
+  const approvalTx = await tokenContract.approve(
+    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    costAmount
+  );
+
+  await approvalTx.wait();
+
+  const payementTx = await contract.buyAccess(id);
+
+  await payementTx.wait();
+
+  return true;
 };
 
 export {
@@ -213,4 +262,6 @@ export {
   connect,
   sendXDC,
   sendHaven,
+  confirmAccess,
+  payForAccess,
 };

@@ -34,22 +34,25 @@ contract Haven {
     }
 
     function buyTokens() external payable {
-    require(tokenPrice > 0, "Token price not set");
     require(msg.value > 0, "Amount must be greater than 0");
 
-    uint256 tokenAmount = (msg.value * (10 ** decimals)) / tokenPrice;
+    uint256 etherAmount = msg.value / 1e18; // Convert Wei to Ether
 
-    balances[msg.sender] += tokenAmount;
-    _totalSupply += tokenAmount;
+    uint256 tokenAmount = (etherAmount * (10 ** decimals)) / tokenPrice;
 
-    emit Transfer(address(0), msg.sender, tokenAmount);
+    uint256 tokenAmountWei = tokenAmount * 10 ** decimals;
+
+    balances[msg.sender] += tokenAmountWei ;
+    _totalSupply += tokenAmountWei;
+
+    emit Transfer(address(0), msg.sender, tokenAmountWei);
 }
 
 function sellTokens(uint256 tokenAmount) external {
         require(tokenAmount > 0, "Amount must be greater than 0");
         require(balances[msg.sender] >= tokenAmount, "Insufficient balance");
         
-        uint256 ethAmount = (tokenAmount * tokenPrice);
+        uint256 ethAmount = (tokenAmount / 10 ** decimals)  * tokenPrice;
 
         balances[msg.sender] -= tokenAmount;
         _totalSupply -= tokenAmount;

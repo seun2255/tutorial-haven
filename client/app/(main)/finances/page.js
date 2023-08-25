@@ -52,11 +52,12 @@ export default function Finance() {
           });
         });
       } else {
-        sellTokens(swapAmount).then(() => {
+        const amount = swapAmount.toString();
+        sellTokens(amount).then(() => {
           recordTransaction(user.address, {
             type: "Swap",
             date: timeStamp(),
-            amount: swapAmount.toString(),
+            amount: amount,
             coin: "hvn",
           }).then(() => {
             setSuccesText("Sold Tokens");

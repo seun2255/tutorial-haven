@@ -29,6 +29,8 @@ export default function UploadVideo() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [selectedPrivacy, setSelectedPrivacy] = useState(0);
+  const [cost, setCost] = useState(0);
 
   const { user } = useSelector((state) => state.user);
 
@@ -98,9 +100,14 @@ export default function UploadVideo() {
     setTags(addedTags);
   };
 
+  const selectPrivacy = (id) => {
+    setSelectedPrivacy(id);
+    if(id === 0) setCost(0)
+  };
+
   const handleUpload = () => {
     setSaving(true);
-    uploadVideo(title, description, videoLink, thumbnail, tags, duration).then(
+    uploadVideo(title, description, videoLink, thumbnail, tags, duration, privacy[selectedPrivacy], cost).then(
       () => {
         setSaved(true);
         const now = new Date();
@@ -248,6 +255,34 @@ export default function UploadVideo() {
           </div>
         </div>
 
+        <div className={styles.input__box}>
+          <h3>Access</h3>
+          <div className={styles.token__choice}>
+          {privacy.map((item, id) => {
+            return (
+              <button
+                key={id}
+                style={{
+                  borderRadius: id === 0 ? "7px 0 0 7px" : "0 7px 7px 0",
+                  backgroundColor:
+                    selectedPrivacy === id ? "rgb(4, 122, 219)" : null,
+                }}
+                onClick={() => selectPrivacy(id)}
+              >
+                {item}
+              </button>
+            );
+          })}
+        </div>
+        {selectedPrivacy === 1 && <div className={styles.cost__input}>
+          <span>Cost (hvn): </span><input
+            type="number"
+            className={styles.custom__input}
+            onChange={(e) => setCost(e.target.value)}
+          />
+          </div>}
+        </div>
+
         <div className={styles.buttons}>
           <button className={styles.upload__button} onClick={handleUpload}>
             Upload
@@ -299,3 +334,8 @@ const availableTags = [
   "DIY",
   "dance",
 ];
+
+const privacy = [
+  'public',
+  'private'
+]

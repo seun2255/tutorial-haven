@@ -82,7 +82,6 @@ const getUserDetails = async (address) => {
   });
   const details = data[address];
   const balances = await getTokenBalance(address);
-  console.log("Balances: ", balances);
   details.balance = balances.ethBalanceEther;
   details.tokenBalance = balances.tokenBalanceEther;
   return details;
@@ -127,6 +126,7 @@ const getUserData = async (address) => {
 };
 
 const uploadNewVideo = async (
+  id,
   title,
   description,
   url,
@@ -135,7 +135,8 @@ const uploadNewVideo = async (
   author_dp,
   address,
   tags,
-  duration
+  duration,
+  cost
 ) => {
   var data1 = {};
   var data2 = {};
@@ -153,7 +154,7 @@ const uploadNewVideo = async (
   });
 
   const videoDetails = {
-    id: data1["videos"].length + 1,
+    id,
     title,
     description,
     url,
@@ -165,6 +166,7 @@ const uploadNewVideo = async (
     tags,
     duration,
     payementAddress: address,
+    cost,
   };
 
   data1["videos"].push(videoDetails);

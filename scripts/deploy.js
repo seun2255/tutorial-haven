@@ -15,7 +15,7 @@ async function main() {
 
   //Main Dapp Contract
   const TutorialHaven = await ethers.getContractFactory("TutorialHaven");
-  const myNFT = await TutorialHaven.deploy();
+  const myNFT = await TutorialHaven.deploy(tokenContract);
 
   console.log("Contract Successfully Deployed!");
   const mainContract = await myNFT.getAddress();

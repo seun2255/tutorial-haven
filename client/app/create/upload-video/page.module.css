@@ -301,6 +301,51 @@
   column-gap: 20px;
 }
 
+.token__choice {
+  display: flex;
+}
+
+.token__choice > button {
+  outline: none;
+  border: none;
+  font-size: 18px;
+  color: white;
+  background-color: #90c5ad;
+  padding: 0.4em 0.8em;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.cost__input {
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.cost__input > span {
+  font-size: 20px;
+  font-weight: 600;
+  color: #5a71cf;
+}
+
+.custom__input {
+  outline: none;
+  border: none;
+  font-size: 18px;
+  color: white;
+  background-color: #90c5ad;
+  padding: 0em 0.8em;
+  width: 120px !important;
+  border-radius: 8px;
+}
+
+.custom__input:focus {
+  border: 2px solid rgb(0, 142, 255);
+}
+
+
 .upload__button {
   background-color: #bfe2d2;
   border: none;

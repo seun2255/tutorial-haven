@@ -13,13 +13,13 @@
   box-sizing: border-box;
   width: 480px;
   height: 30px;
-
   border: 1px solid #cccccc;
   border-radius: 10px;
   color: #cccccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .search__input::-webkit-search-cancel-button {
@@ -46,6 +46,37 @@
   width: 13px;
   position: relative;
   margin-right: 10px;
+}
+
+.search__results {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  top: 35px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.search__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgb(174, 172, 172);
+}
+
+.search__item > h3 {
+  margin: 0%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.search__item > span {
+  font-size: 15px;
+  color: grey;
 }
 
 .name__card {

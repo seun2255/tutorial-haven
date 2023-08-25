@@ -31,8 +31,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: Manrope;
+  src: url(_assets/fonts/Manrope-Regular.ttf);
+}
+
 * {
-  font-family: sans-serif;
+  font-family: Manrope !important;
 }
 
 p,

@@ -83,7 +83,7 @@ export default function Video({ params }) {
           <div className={styles.video__info}>
             <div className={styles.details}>
               <h3 className={styles.video__title}>{video.title}</h3>
-              <div className={styles.counts}>views</div>
+              {/* <div className={styles.counts}>views</div> */}
             </div>
             <div className={styles.buttons}>
               <button

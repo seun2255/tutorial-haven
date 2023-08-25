@@ -40,6 +40,7 @@ const createUser = async (address) => {
     profilePic: "",
     followers: [],
     videos: [],
+    requests: [],
     lives: [],
     address: address,
     transactions: [],

@@ -48,6 +48,7 @@ export default function RequestModal(props) {
             setLoading(false);
             setTimeout(() => {
               setSucces(false);
+              setModal(false);
             }, 4000);
           });
         });
@@ -73,6 +74,7 @@ export default function RequestModal(props) {
             setLoading(false);
             setTimeout(() => {
               setSucces(false);
+              setModal(false);
             }, 4000);
           });
         });

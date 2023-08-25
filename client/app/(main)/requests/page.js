@@ -31,21 +31,9 @@ export default function Requests() {
             new
           </button>
         </div>
-        <Table data={data} />
+        <Table data={requests} />
       </div>
       {request && <RequestModal setModal={setRequest} />}
     </div>
   );
 }
-
-const data = [
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-  { request: "Help me", reward: 50, coin: "hvn" },
-];

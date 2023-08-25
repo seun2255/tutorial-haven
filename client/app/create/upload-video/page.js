@@ -67,12 +67,14 @@ export default function UploadVideo() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleThumbnailUpload = async (event) => {
+    setPicLoader(true);
     let file = event.target.files[0];
     if (file) {
       const cid = await client.put(event.target.files);
       const url = linkCreator(cid, file.name);
       setThumbnailPic(url);
       setThumbnail(url);
+      setPicLoader(false);
     }
   };
 
@@ -102,22 +104,30 @@ export default function UploadVideo() {
 
   const selectPrivacy = (id) => {
     setSelectedPrivacy(id);
-    if(id === 0) setCost(0)
+    if (id === 0) setCost(0);
   };
 
   const handleUpload = () => {
     setSaving(true);
-    uploadVideo(title, description, videoLink, thumbnail, tags, duration, privacy[selectedPrivacy], cost).then(
-      () => {
-        setSaved(true);
-        const now = new Date();
-        const expiryTime = new Date(now.getTime() + 2 * 60 * 1000);
-        localStorage.setItem("expiry", expiryTime);
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
-      }
-    );
+    uploadVideo(
+      title,
+      description,
+      videoLink,
+      thumbnail,
+      tags,
+      duration,
+      privacy[selectedPrivacy],
+      cost
+    ).then(() => {
+      setSaved(true);
+      const now = new Date();
+      const expiryTime = new Date(now.getTime() + 2 * 60 * 1000);
+      localStorage.setItem("expiry", expiryTime);
+      availableTags = staticTags;
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    });
   };
 
   const animateProgress = useSpring({
@@ -195,7 +205,14 @@ export default function UploadVideo() {
         </div>
         <div className={styles.thumbnail__box}>
           <div className={styles.thumbnail}>
-            {thumbnailPic ? (
+            {picLoader ? (
+              <ThreeDots
+                height="20%"
+                width="80%"
+                color="#3c30dd"
+                visible={true}
+              />
+            ) : thumbnailPic ? (
               <Image
                 src={thumbnailPic}
                 alt="thumbnail"
@@ -258,29 +275,32 @@ export default function UploadVideo() {
         <div className={styles.input__box}>
           <h3>Access</h3>
           <div className={styles.token__choice}>
-          {privacy.map((item, id) => {
-            return (
-              <button
-                key={id}
-                style={{
-                  borderRadius: id === 0 ? "7px 0 0 7px" : "0 7px 7px 0",
-                  backgroundColor:
-                    selectedPrivacy === id ? "rgb(4, 122, 219)" : null,
-                }}
-                onClick={() => selectPrivacy(id)}
-              >
-                {item}
-              </button>
-            );
-          })}
-        </div>
-        {selectedPrivacy === 1 && <div className={styles.cost__input}>
-          <span>Cost (hvn): </span><input
-            type="number"
-            className={styles.custom__input}
-            onChange={(e) => setCost(e.target.value)}
-          />
-          </div>}
+            {privacy.map((item, id) => {
+              return (
+                <button
+                  key={id}
+                  style={{
+                    borderRadius: id === 0 ? "7px 0 0 7px" : "0 7px 7px 0",
+                    backgroundColor:
+                      selectedPrivacy === id ? "rgb(4, 122, 219)" : null,
+                  }}
+                  onClick={() => selectPrivacy(id)}
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div>
+          {selectedPrivacy === 1 && (
+            <div className={styles.cost__input}>
+              <span>Cost (hvn): </span>
+              <input
+                type="number"
+                className={styles.custom__input}
+                onChange={(e) => setCost(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className={styles.buttons}>
@@ -323,19 +343,36 @@ function Tag(props) {
   );
 }
 
-const availableTags = [
+var availableTags = [
   "music",
   "education",
   "tech",
-  "software developmemnt",
+  "software",
   "history",
   "games",
   "anime",
   "DIY",
   "dance",
+  "sport",
+  "cartoon",
+  "vlog",
+  "science",
 ];
 
-const privacy = [
-  'public',
-  'private'
-]
+const staticTags = [
+  "music",
+  "education",
+  "tech",
+  "software",
+  "history",
+  "games",
+  "anime",
+  "DIY",
+  "dance",
+  "sport",
+  "cartoon",
+  "vlog",
+  "science",
+];
+
+const privacy = ["public", "private"];

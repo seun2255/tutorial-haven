@@ -56,16 +56,17 @@ export default function Home() {
 }
 
 const categories = [
-  "tech",
-  "school",
-  "diy",
-  "cooking",
-  "guides",
-  "sports",
   "music",
-  "games",
-  "dance",
   "education",
+  "tech",
+  "software",
+  "history",
+  "games",
+  "anime",
+  "DIY",
+  "dance",
+  "sport",
+  "cartoon",
+  "vlog",
   "science",
-  "art",
 ];

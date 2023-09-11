@@ -48,20 +48,22 @@ const getSigner = async () => {
   // return signer;
 
   if (window.ethereum) {
-    // const apothemChainId = "0x33"; // Chain ID for Apothem Testnet
-
-    // // Check if the user is on the Apothem network
-    // if (window.ethereum.chainId !== apothemChainId) {
-    //   try {
-    //     // Request the user to switch to the Apothem network
-    //     await window.ethereum.request({
-    //       method: "wallet_switchEthereumChain",
-    //       params: [{ chainId: apothemChainId }],
-    //     });
-    //   } catch (error) {
-    //     console.error("Failed to switch network:", error);
-    //   }
-    // }
+    window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          chainId: "0x13881",
+          rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+          chainName: "Matic Mumbai",
+          nativeCurrency: {
+            name: "MATIC",
+            symbol: "MATIC",
+            decimals: 18,
+          },
+          blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+        },
+      ],
+    });
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();

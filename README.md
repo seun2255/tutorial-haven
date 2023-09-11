@@ -9,9 +9,9 @@ as simple and enjoyable as possible.
 
 ## Resources
 
-- #### [Tutorial Haven Contract](https://explorer.apothem.network/address/xdc8bb6eaBD3316593D6abDc3d0bA5C48Cdabb4aC28#transactions)
+- #### [Tutorial Haven Contract](https://explorer.apothem.network/address/0x735772f540b6aac15FceE3D29218162c847F99fE#transactions)
 
-- #### [Haven Token Contract](https://explorer.apothem.network/address/xdc893199D7E7090D52C9b3897e1284224dbAf98a3a#transactions)
+- #### [Haven Token Contract](https://explorer.apothem.network/address/0xeec1C4B5c96F7F22F5E64Ab34B911A36B4FCf076#transactions)
 
 ## What it does
 

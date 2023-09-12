@@ -53,7 +53,7 @@ const getSigner = async () => {
       params: [
         {
           chainId: "0x5",
-          rpcUrls: ["https://goerli.infura.io/v3/YOUR_INFURA_PROJECT_ID"], // Replace 'YOUR_INFURA_PROJECT_ID' with your Infura project ID
+          rpcUrls: [`https://eth-goerli.alchemyapi.io/v2/${alchemyApiKey}`], // Replace 'YOUR_INFURA_PROJECT_ID' with your Infura project ID
           chainName: "Goerli Testnet",
           nativeCurrency: {
             name: "Ether",

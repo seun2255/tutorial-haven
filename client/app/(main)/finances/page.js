@@ -88,7 +88,7 @@ export default function Finance() {
                 </div>
                 <div className={styles.token__details}>
                   <p className={styles}>xdc balance</p>
-                  <h3>{formatToTwoDecimalPlaces(user.balance)} xdc</h3>
+                  <h3>{formatToTwoDecimalPlaces(user.balance)} ETH</h3>
                 </div>
               </div>
               <div

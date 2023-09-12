@@ -52,15 +52,15 @@ const getSigner = async () => {
       method: "wallet_addEthereumChain",
       params: [
         {
-          chainId: "0x13881",
-          rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-          chainName: "Matic Mumbai",
+          chainId: "0x5",
+          rpcUrls: ["https://goerli.infura.io/v3/YOUR_INFURA_PROJECT_ID"], // Replace 'YOUR_INFURA_PROJECT_ID' with your Infura project ID
+          chainName: "Goerli Testnet",
           nativeCurrency: {
-            name: "MATIC",
-            symbol: "MATIC",
+            name: "Ether",
+            symbol: "ETH",
             decimals: 18,
           },
-          blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          blockExplorerUrls: ["https://goerli.etherscan.io/"],
         },
       ],
     });
